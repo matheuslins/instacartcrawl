@@ -1,11 +1,14 @@
-import asyncio
+from aiohttp import web
 
-from src.talkers.sites.instacart import InstaCartTalker
+from src.init.routes import routes
+from src.spiders.instacart import InstaCartSpider
 
 
 def run():
-    site_talker = InstaCartTalker()
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(site_talker.run())
+    app = web.Application()
+    app.add_routes(routes=routes)
+    app.router.add_view("/instacart", InstaCartSpider)
+    web.run_app(app)
+
 
 
