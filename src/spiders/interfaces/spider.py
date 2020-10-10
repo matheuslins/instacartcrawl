@@ -3,8 +3,10 @@ from abc import ABCMeta, abstractmethod
 from aiohttp import web
 from aiohttp import ClientSession
 
+from src.core.request import RequestHandler
 
-class BaseSpiderInterface(web.View, metaclass=ABCMeta):
+
+class BaseSpider(web.View, metaclass=ABCMeta):
     response = None
 
     @abstractmethod
@@ -15,17 +17,16 @@ class BaseSpiderInterface(web.View, metaclass=ABCMeta):
     async def start_crawl(self, response):
         raise NotImplementedError
 
-    @staticmethod
-    async def _initial_request(*, session, url):
-        async with session.get(url) as resp:
-            return await resp.text()
+    @abstractmethod
+    async def extract_data(self):
+        raise NotImplementedError
 
     async def request_initial_page(self):
+        request_handler = RequestHandler()
+
         async with ClientSession() as session:
             self.response = await asyncio.create_task(
-                self._initial_request(
-                    session=session, url=self.get_start_url()
-                )
+                request_handler.make(session=session, url=self.get_start_url())
             )
 
     async def run(self, request):
