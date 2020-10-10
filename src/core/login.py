@@ -1,7 +1,9 @@
 from bs4 import BeautifulSoup
 
+from src.core.request import RequestHandler
 
-class LoginHandler:
+
+class LoginHandler(RequestHandler):
     response = None
     soup = None
     login_data = {}

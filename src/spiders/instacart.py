@@ -1,21 +1,24 @@
+import json
+
 from src.spiders.interfaces.spiderlogin import SpiderLoginInterface
-from src.settings import SPIDERS_CONSTANTS
+from src.settings import SPIDERS_SETTINGS
 
 
 class InstaCartSpider(SpiderLoginInterface):
 
-    start_url = SPIDERS_CONSTANTS["instacart"]["START_URL"]
+    start_url = SPIDERS_SETTINGS["instacart"]["START_URL"]
 
     def __init__(self, *args, **kwargs):
         super(InstaCartSpider, self).__init__(*args, **kwargs)
         self.set_extraction_keys()
+        self.set_login_params()
 
     async def get(self):
         return await self.run(self.request)
 
     def set_extraction_keys(self):
         self.keys_to_extract = {
-            "captcha": {
+            "site_key_captcha": {
                 "params": {"name": "script", "attrs": {"id": "node-gon"}},
                 "method_to_extract": self.get_by_json
             },
@@ -25,9 +28,27 @@ class InstaCartSpider(SpiderLoginInterface):
             }
         }
 
+    def set_login_params(self):
+        self.login_params = {
+            "url": SPIDERS_SETTINGS["instacart"]["LOGIN_URL"],
+            "json": {
+                "scope": "",
+                "grant_type": "password",
+                "signup_v3_endpoints_web": None,
+                "email": SPIDERS_SETTINGS["instacart"]["AUTH_USER"],
+                "password": SPIDERS_SETTINGS["instacart"]["AUTH_PASSWORD"],
+                "address": None,
+                "captcha": None
+            }
+        }
+
     @staticmethod
     def get_by_json(data):
-        return None
+        if not data:
+            return None
+        raw_data = str(data[0].next)
+        json_data = json.loads(raw_data)
+        return json_data["landingContainer"]["container_payload"]["container"]["modules"][35]["data"]["sitekey"]
 
     @staticmethod
     def get_by_meta(data):

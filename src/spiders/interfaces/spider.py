@@ -1,7 +1,6 @@
 import asyncio
 from abc import ABCMeta, abstractmethod
 from aiohttp import web
-from aiohttp import ClientSession
 
 from src.core.request import RequestHandler
 
@@ -23,11 +22,10 @@ class BaseSpider(web.View, metaclass=ABCMeta):
 
     async def request_initial_page(self):
         request_handler = RequestHandler()
-
-        async with ClientSession() as session:
-            self.response = await asyncio.create_task(
-                request_handler.make(session=session, url=self.get_start_url())
-            )
+        task_response = await asyncio.create_task(
+            request_handler.make_request(method="GET", url=self.get_start_url())
+        )
+        self.response = task_response["text"]
 
     async def run(self, request):
         await self.request_initial_page()

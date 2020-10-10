@@ -1,16 +1,20 @@
+from aiohttp import ClientSession
 
 
 class RequestHandler:
     headers = {}
     cookies = {}
 
-    async def post_request(self, session, url):
-        async with session.post(url, cookies=self.cookies, headers=self.headers) as resp:
-            return await resp.text()
+    def __init__(self, headers=None, cookies=None):
+        self.headers = headers
+        self.cookies = cookies
 
-    async def make(self, session, url, method=None):
-        if method and method == "post":
-            await self.post_request(session, url)
-        else:
-            async with session.get(url, cookies=self.cookies, headers=self.headers) as resp:
-                return await resp.text()
+    async def make_request(self, **kwargs):
+        async with ClientSession() as session:
+            async with session.request(**kwargs) as resp:
+                return {
+                    "status": resp.status,
+                    "text": await resp.text(),
+                    "headers": resp.headers,
+                    "raw": resp
+                }
