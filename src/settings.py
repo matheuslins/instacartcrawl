@@ -10,7 +10,8 @@ SPIDERS_SETTINGS = {
     "instacart": {
         "START_URL": "http://instacart.com",
         "LOGIN_URL": "https://www.instacart.com/v3/dynamic_data/authenticate/login?source=web&cache_key=undefined",
-        "HEADERS_LOGIN": {
+        "STORES_URL": "https://www.instacart.com/v3/containers/next_gen/onboarding?source=web&cache_key=undefined",
+        "BASE_HEADERS": {
             'authority': 'www.instacart.com',
             'pragma': 'no-cache',
             'cache-control': 'no-cache',
@@ -28,7 +29,7 @@ SPIDERS_SETTINGS = {
             'Content-Type': 'application/json'
         },
         "AUTH_USER": config("AUTH_USER"),
-        "AUTH_PASSWORD": config("AUTH_PASSWORD")
+        "AUTH_PASSWORD": config("AUTH_PASSWORD"),
     }
 }
 

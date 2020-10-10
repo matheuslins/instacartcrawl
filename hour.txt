@@ -1,3 +1,5 @@
 Build the basic structure - 2h
 Build the wsgi server and routes for start url - 2h
 Get data to make strutcture to login (session token) - 2h
+Passed by login - 3h
+Continue with session token and enter into store - 2h

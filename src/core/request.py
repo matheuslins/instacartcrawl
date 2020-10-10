@@ -15,6 +15,5 @@ class RequestHandler:
                 return {
                     "status": resp.status,
                     "text": await resp.text(),
-                    "headers": resp.headers,
                     "raw": resp
                 }

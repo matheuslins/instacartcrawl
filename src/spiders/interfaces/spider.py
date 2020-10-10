@@ -20,6 +20,10 @@ class BaseSpider(web.View, metaclass=ABCMeta):
     async def extract_data(self):
         raise NotImplementedError
 
+    @abstractmethod
+    def save_items(self):
+        raise NotImplementedError
+
     async def request_initial_page(self):
         request_handler = RequestHandler()
         task_response = await asyncio.create_task(
