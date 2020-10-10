@@ -1,7 +1,10 @@
 
-TALKER_SETTINGS = {
+SPIDERS_CONSTANTS = {
     "instacart": {
-        "START_URL": "http://instacart.com"
+        "START_URL": "http://instacart.com",
+        "EXTRACTION_KEYS": {
+
+        }
     }
 }
 

@@ -2,3 +2,4 @@ aiohttp==3.6.2
 cchardet==2.1.6
 aiodns==2.0.0
 python-decouple==3.3
+beautifulsoup4==4.9.3
