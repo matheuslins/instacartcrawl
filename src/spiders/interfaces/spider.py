@@ -13,15 +13,15 @@ class BaseSpider(web.View, metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    async def start_crawl(self, response):
+    async def start_consult(self, response):
         raise NotImplementedError
 
     @abstractmethod
-    async def extract_data(self):
+    async def start_extract(self):
         raise NotImplementedError
 
     @abstractmethod
-    def save_items(self):
+    def save_item(self):
         raise NotImplementedError
 
     async def request_initial_page(self):
@@ -33,5 +33,6 @@ class BaseSpider(web.View, metaclass=ABCMeta):
 
     async def run(self, request):
         await self.request_initial_page()
-        await self.start_crawl(self.response)
+        await self.start_consult(self.response)
+        await self.start_extract()
         return web.Response(text="Starting crawling...")

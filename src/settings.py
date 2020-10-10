@@ -11,6 +11,7 @@ SPIDERS_SETTINGS = {
         "START_URL": "http://instacart.com",
         "LOGIN_URL": "https://www.instacart.com/v3/dynamic_data/authenticate/login?source=web&cache_key=undefined",
         "STORES_URL": "https://www.instacart.com/v3/containers/next_gen/onboarding?source=web&cache_key=undefined",
+        "SPECIFIC_STORE": "https://www.instacart.com/store/{}/storefront".format,
         "BASE_HEADERS": {
             'authority': 'www.instacart.com',
             'pragma': 'no-cache',
