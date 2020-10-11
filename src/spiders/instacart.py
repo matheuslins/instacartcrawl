@@ -49,9 +49,10 @@ class InstaCartSpider(SpiderLoginInterface):
 
         self.item = {
             "storeName": store_name,
-            "storeUrl": store.img.attrs['src'],
-            "products": await self.get_all_products(store_name)
+            "storeUrl": store.img.attrs['src']
         }
+
+        await self.save_all_products(store_name)
 
     async def get_links_paths(self, store_name):
         links_paths = []
@@ -77,7 +78,8 @@ class InstaCartSpider(SpiderLoginInterface):
 
         return links_paths
 
-    async def get_all_products(self, store_name):
+    async def save_all_products(self, store_name):
+        count = 0
         all_products = {}
 
         headers = SPIDERS_SETTINGS['instacart']["BASE_HEADERS"]
@@ -87,6 +89,7 @@ class InstaCartSpider(SpiderLoginInterface):
         links_paths = await self.get_links_paths(store_name)
 
         for path in links_paths:
+            print(f"Path: {path}")
             url = f'{SPIDERS_SETTINGS["instacart"]["START_URL"]}{path}'
             response = await self.make_request(
                 method="GET",
@@ -95,15 +98,23 @@ class InstaCartSpider(SpiderLoginInterface):
             )
             json_response = await response['raw'].json()
             department = json_response['module_data']['tracking_params']['source_value']
+            print(f"Department: {department}")
 
             products = json_response['module_data']['items']
 
             for product in products:
+                count = count + 1
                 all_products.setdefault(department, []).append({
                     'name': product['name']
                 })
-
-        return all_products
+                print(f"Product {count}: {product['name']}")
+                # if count > 10:
+                #     self.item.update({
+                #         pro
+                #     })
+                #     await self.save_item()
+                #     count = 0
+        self.item['products'] = all_products
 
     def set_extraction_keys(self):
         self.keys_to_extract = {

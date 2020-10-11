@@ -42,8 +42,8 @@ class SpiderLoginInterface(BaseSpider, LoginHandler):
         self.session_cookies = response['raw'].cookies
 
     def save_item(self):
-        item = InstaCartItem()
-        item.save(self.item)
+        item = InstaCartItem(**self.item)
+        item.save()
 
     async def start_consult(self, response):
         self.start_login()
