@@ -90,6 +90,7 @@ class InstaCartSpider(SpiderLoginInterface):
 
         for path in links_paths:
             print(f"Path: {path}")
+
             url = f'{SPIDERS_SETTINGS["instacart"]["START_URL"]}{path}'
             response = await self.make_request(
                 method="GET",
@@ -98,6 +99,7 @@ class InstaCartSpider(SpiderLoginInterface):
             )
             json_response = await response['raw'].json()
             department = json_response['module_data']['tracking_params']['source_value']
+
             print(f"Department: {department}")
 
             products = json_response['module_data']['items']
@@ -107,13 +109,9 @@ class InstaCartSpider(SpiderLoginInterface):
                 all_products.setdefault(department, []).append({
                     'name': product['name']
                 })
+
                 print(f"Product {count}: {product['name']}")
-                # if count > 10:
-                #     self.item.update({
-                #         pro
-                #     })
-                #     await self.save_item()
-                #     count = 0
+
         self.item['products'] = all_products
 
     def set_extraction_keys(self):
