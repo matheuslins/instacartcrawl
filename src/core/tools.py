@@ -1,3 +1,4 @@
+import re
 
 
 def parse_cookies(cookies):
@@ -8,3 +9,8 @@ def parse_cookies(cookies):
         new_cookies.append(parsed_cookie)
 
     return ";".join(new_cookies)
+
+
+def remove_special_chars(element):
+    clean_string = re.findall(r'\w+', element)
+    return '-'.join([e.lower() for e in clean_string])
