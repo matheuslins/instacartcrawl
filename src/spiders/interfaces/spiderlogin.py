@@ -4,13 +4,11 @@ from src.spiders.interfaces.spider import BaseSpider
 from src.core.login import LoginHandler
 from src.core.captcha import CaptchaHandler
 from src.settings import SPIDERS_SETTINGS, CAPTCHA
-from src.core.tools import parse_cookies
 from src.models.instacart.item import InstaCartItem
 
 
 class SpiderLoginInterface(BaseSpider, LoginHandler):
     start_url = None
-    first_store = None
     session_cookies = {}
     login_params = {}
     item = {}
