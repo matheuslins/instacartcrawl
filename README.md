@@ -96,7 +96,7 @@ and uses javascript to load the data on the page. So, I needed to understand the
 
 ```
 1 - Save in NoSql Database (MongoDB or ElasticSearch)
-2 - Create a Dashboard where is possible to see the processing of scraping in real time
+2 - Create a Dashboard where is possible to see the processing of scraping in real-time
 3 - Unit Tests
 ```
 
