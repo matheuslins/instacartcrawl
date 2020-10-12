@@ -98,7 +98,10 @@ class InstacartBusiness(SpiderLoginInterface):
 
         for _task in tasks_response:
             json_response = _task['json']
-            department = json_response['module_data']['tracking_params']['source_value']
+            try:
+                department = json_response['module_data']['header_label_action']['label']
+            except KeyError:
+                department = json_response['module_data']['tracking_params']['source_value']
 
             self.log.info(f"{self.spider_name} - Department: {department}")
 
