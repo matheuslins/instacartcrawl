@@ -9,7 +9,8 @@ class RequestHandler:
         self.headers = headers
         self.cookies = cookies
 
-    async def make_request(self, **kwargs):
+    @staticmethod
+    async def make_request(**kwargs):
         async with ClientSession() as session:
             async with session.request(**kwargs) as resp:
                 return {

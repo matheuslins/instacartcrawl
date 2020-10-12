@@ -1,4 +1,5 @@
 import asyncio
+
 from abc import ABCMeta, abstractmethod
 from aiohttp import web
 
@@ -21,7 +22,7 @@ class BaseSpider(web.View, metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    def save_item(self):
+    def save_item(self, file_name):
         raise NotImplementedError
 
     async def request_initial_page(self):

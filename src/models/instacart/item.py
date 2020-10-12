@@ -11,7 +11,7 @@ class InstaCartItem:
     storeUrl: str = ''
     products:  Dict = field(default_factory=dict)
 
-    def save(self):
-        with open("item.json", "a") as file:
+    def save(self, file_name):
+        with open(file_name, "a") as file:
             item = ItemAdapter(self).asdict()
             json.dump(item, file, indent=4)
