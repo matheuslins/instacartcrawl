@@ -9,6 +9,7 @@ from src.core.logging import LoggerHandler
 
 class BaseSpider(LoggerHandler, web.View, metaclass=ABCMeta):
     response = None
+    spider_name = None
 
     def __init__(self, *args, **kwargs):
         super(BaseSpider, self).__init__(*args, **kwargs)
@@ -31,14 +32,14 @@ class BaseSpider(LoggerHandler, web.View, metaclass=ABCMeta):
         raise NotImplementedError
 
     async def request_initial_page(self):
-        self.log.info("Initial page request...")
+        self.log.info("Initial page request", extra={'spider': self.spider_name})
         request_handler = RequestHandler()
         response = await request_handler.make_session_request(
             method="GET",
             url=self.get_start_url()
         )
         self.response = response["text"]
-        self.log.info("Got initial page text")
+        self.log.info("Got initial page text", extra={'spider': self.spider_name})
 
     async def run(self):
         await self.request_initial_page()
