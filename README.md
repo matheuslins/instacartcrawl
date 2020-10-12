@@ -79,6 +79,6 @@ So, you will see here an organization based on limits, resources, business, and 
 My first difficult was to get the access_token. I needed it to build a login request. After some minutes of searching, I found it and merging
 with the captcha token has taken through the 2Captcha system, was possible to gain a instacart session.
 
-After that, I took some hours to discovery how to get the data. It was a litter difficult because the site has an API navegation
-and use javascript to load the data on the page. So, I needed to understand the API flow, but I got it!
+After that, I took some hours to discover how to get the data. It was a litter difficult because the site has API navigation
+and uses javascript to load the data on the page. So, I needed to understand the API flow, but I got it!
 
