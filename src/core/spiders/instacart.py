@@ -8,8 +8,9 @@ from src.spiders.interfaces.spiderlogin import SpiderLoginInterface
 
 
 class InstacartBusiness(SpiderLoginInterface):
-    first_store = None
+    spider_name = 'instacart'
     spider_headers = SPIDERS_SETTINGS["instacart"]["BASE_HEADERS"]
+    first_store = None
 
     async def consult_stores(self):
         self.spider_headers['cookie'] = SPIDERS_SETTINGS["instacart"]["STORE_COOKIE"]

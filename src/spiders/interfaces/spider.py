@@ -8,6 +8,7 @@ from src.core.request import RequestHandler
 
 class BaseSpider(web.View, metaclass=ABCMeta):
     response = None
+    spider_name = None
 
     @abstractmethod
     def get_start_url(self):
@@ -40,7 +41,6 @@ class BaseSpider(web.View, metaclass=ABCMeta):
         _ = asyncio.create_task(self.start_extract())
 
         return web.json_response({
-            "task": "Extract Data",
-            "status": HTTPStatus.OK,
-            "type": "Background"
+            "task": f"extract-data-{self.spider_name}",
+            "status": HTTPStatus.OK
         })
