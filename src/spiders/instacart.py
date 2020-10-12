@@ -1,5 +1,4 @@
 import json
-import asyncio
 
 from src.settings import SPIDERS_SETTINGS
 from src.core.spiders.instacart import InstacartBusiness
@@ -15,8 +14,7 @@ class InstaCartSpider(InstacartBusiness):
         self.set_login_params()
 
     async def get(self):
-        task_response = await asyncio.create_task(self.run())
-        return task_response
+        return await self.run()
 
     def set_extraction_keys(self):
         self.keys_to_extract = {

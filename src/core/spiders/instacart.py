@@ -42,7 +42,7 @@ class InstacartBusiness(SpiderLoginInterface):
         }
 
         await asyncio.wait(
-            await self.get_all_products_tasks(store_name)
+            fs=await self.get_all_products_tasks(store_name)
         )
 
     async def get_links_paths(self, store_name):

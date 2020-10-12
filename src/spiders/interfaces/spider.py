@@ -1,5 +1,7 @@
+import asyncio
 from abc import ABCMeta, abstractmethod
 from aiohttp import web
+from http import HTTPStatus
 
 from src.core.request import RequestHandler
 
@@ -34,5 +36,11 @@ class BaseSpider(web.View, metaclass=ABCMeta):
     async def run(self):
         await self.request_initial_page()
         await self.start_consult(self.response)
-        await self.start_extract()
-        return web.Response(text="Starting crawling...")
+
+        _ = asyncio.create_task(self.start_extract())
+
+        return web.json_response({
+            "task": "Extract Data",
+            "status": HTTPStatus.OK,
+            "type": "Background"
+        })
