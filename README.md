@@ -9,7 +9,8 @@ so it's necessary to set the API KEY as environment vars.
  
 ### Environment vars
 
-First of all, set all environment vars. See the `.env-example` file
+First of all, create `.env` file in the root of the project and set all environment vars. 
+See the `.env-example` file
 
 1 - Auth credentials of Instacart Site
 
@@ -90,4 +91,12 @@ with the captcha token has taken through the 2Captcha system, was possible to ga
 
 After that, I took some hours to discover how to get the data. It was a litter difficult because the site has API navigation
 and uses javascript to load the data on the page. So, I needed to understand the API flow, but I got it!
+
+## TODO
+
+```
+1 - Save in NoSql Database (MongoDB or ElasticSearch)
+2 - Create a Dashboard where is possible to see the processing of scraping in real time
+3 - Unit Tests
+```
 
