@@ -8,6 +8,7 @@ from src.spiders.interfaces.spiderlogin import SpiderLoginInterface
 
 
 class InstacartBusiness(SpiderLoginInterface):
+
     spider_name = 'instacart'
     spider_headers = SPIDERS_SETTINGS["instacart"]["BASE_HEADERS"]
     first_store = None
@@ -75,7 +76,7 @@ class InstacartBusiness(SpiderLoginInterface):
 
         async with ClientSession() as session:
             for path in links_paths:
-                print(f"Path: {path}")
+                self.log.info(f"Path: {path}")
                 url = f'{SPIDERS_SETTINGS["instacart"]["START_URL"]}{path}'
                 task = asyncio.ensure_future(
                     self.make_raw_request(
@@ -100,7 +101,7 @@ class InstacartBusiness(SpiderLoginInterface):
             json_response = _task['json']
             department = json_response['module_data']['tracking_params']['source_value']
 
-            print(f"Department: {department}")
+            self.log.info(f"Department: {department}")
 
             products = json_response['module_data']['items']
 
@@ -109,6 +110,6 @@ class InstacartBusiness(SpiderLoginInterface):
                 all_products.setdefault(department, []).append({
                     'name': product['name']
                 })
-                print(f"Product {count}: {product['name']}")
+                self.log.info(f"Product {count}: {product['name']}")
 
         self.item['products'] = all_products
