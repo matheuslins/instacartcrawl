@@ -1,6 +1,9 @@
+Bellow the list of task made and how long did it take me to make them
+
 Build the basic structure - 2h
-Build the wsgi server and routes for start url - 2h
-Get data to make strutcture to login (session token) - 2h
+Build the WSGI server and routes for start URL - 2h
+Get data to make the structure to login (session token) - 2h
 Passed by login - 3h
-Continue with session token and enter into store - 2h
+Continue with a session token and enter into the store - 2h
 Understand the API and capture items - 3h
+Write the Readme file - 1h
