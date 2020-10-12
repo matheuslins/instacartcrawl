@@ -7,3 +7,4 @@ Passed by login - 3h
 Continue with a session token and enter into the store - 2h
 Understand the API and capture items - 3h
 Write the Readme file - 1h
+Improvement of code - 1h

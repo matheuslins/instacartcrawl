@@ -32,7 +32,7 @@ class SpiderLoginInterface(BaseSpider, LoginHandler):
         self.login_params["json"]["authenticity_token"] = self.login_data["authenticity_token"]
         self.login_params["json"]["captcha"] = captcha_result
 
-        response = await self.make_request(
+        response = await self.make_session_request(
             method="POST",
             headers=SPIDERS_SETTINGS["instacart"]["BASE_HEADERS"],
             **self.login_params

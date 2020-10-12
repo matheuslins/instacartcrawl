@@ -10,7 +10,7 @@ class RequestHandler:
         self.cookies = cookies
 
     @staticmethod
-    async def make_request(**kwargs):
+    async def make_session_request(**kwargs):
         async with ClientSession() as session:
             async with session.request(**kwargs) as resp:
                 return {
@@ -18,3 +18,12 @@ class RequestHandler:
                     "text": await resp.text(),
                     "raw": resp
                 }
+
+    @staticmethod
+    async def make_raw_request(session, **kwargs):
+        async with session.request(**kwargs) as resp:
+            return {
+                "text": await resp.text(),
+                "read": await resp.read(),
+                "json": await resp.json()
+            }
