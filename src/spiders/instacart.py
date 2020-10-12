@@ -6,6 +6,7 @@ from src.core.spiders.instacart import InstacartBusiness
 
 class InstaCartSpider(InstacartBusiness):
 
+    spider_name = 'instacart'
     start_url = SPIDERS_SETTINGS["instacart"]["START_URL"]
 
     def __init__(self, *args, **kwargs):

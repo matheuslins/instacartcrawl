@@ -7,7 +7,7 @@ class LoggerHandler:
     def set_base_config(self):
         logging.basicConfig(
             level=logging.INFO,
-            format='%(asctime)s - %(spider)s - %(message)s',
+            format='%(asctime)s - %(message)s',
             datefmt='%d-%b-%y %H:%M:%S'
         )
         self.log = logging.getLogger()

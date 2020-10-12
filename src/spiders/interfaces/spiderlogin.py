@@ -17,7 +17,7 @@ class SpiderLoginInterface(BaseSpider, LoginHandler):
         return self.start_url
 
     async def make_login(self):
-        self.log.info("Spider captcha detected", extra={'spider': self.spider_name})
+        self.log.info(f"{self.spider_name} - Spider captcha detected")
         two_captcha = TwoCaptcha(**{
             'apiKey': CAPTCHA['2CAPTCHA_API_KEY'],
             'defaultTimeout': 60,
@@ -25,13 +25,13 @@ class SpiderLoginInterface(BaseSpider, LoginHandler):
             'pollingInterval': 7
         })
         captcha_handler = CaptchaHandler(captcha_resolver=two_captcha)
-        self.log.info(f"Solving captcha - {self.login_data['site_key_captcha']}", extra={'spider': self.spider_name})
+        self.log.info(f"{self.spider_name} - Solving captcha - {self.login_data['site_key_captcha']}")
 
         captcha_result = await captcha_handler.broker_captcha(
             site_key=self.login_data["site_key_captcha"],
             site_url=SPIDERS_SETTINGS["instacart"]["START_URL"]
         )
-        self.log.info(f"Captcha solved: {captcha_result}", extra={'spider': self.spider_name})
+        self.log.info(f"{self.spider_name} - Captcha solved: {captcha_result}")
 
         self.login_params["json"]["authenticity_token"] = self.login_data["authenticity_token"]
         self.login_params["json"]["captcha"] = captcha_result
@@ -42,15 +42,15 @@ class SpiderLoginInterface(BaseSpider, LoginHandler):
             **self.login_params
         )
         self.session_cookies = response['raw'].cookies
-        self.log.info(f"Session cookies saved.", extra={'spider': self.spider_name})
+        self.log.info(f"{self.spider_name} - Session cookies saved.")
 
     def save_item(self, file_name):
         item = InstaCartItem(**self.item)
         item.save(file_name)
 
     async def start_consult(self, response):
-        self.log.info("Start consult spider", extra={'spider': self.spider_name})
-        self.log.info("Spider with login", extra={'spider': self.spider_name})
+        self.log.info(f"{self.spider_name} - Start consult spider")
+        self.log.info(f"{self.spider_name} - Spider with login")
         self.start_login()
         await self.make_login()
 

@@ -32,14 +32,14 @@ class BaseSpider(LoggerHandler, web.View, metaclass=ABCMeta):
         raise NotImplementedError
 
     async def request_initial_page(self):
-        self.log.info("Initial page request", extra={'spider': self.spider_name})
+        self.log.info(f"{self.spider_name} - Initial page request")
         request_handler = RequestHandler()
         response = await request_handler.make_session_request(
             method="GET",
             url=self.get_start_url()
         )
         self.response = response["text"]
-        self.log.info("Got initial page text", extra={'spider': self.spider_name})
+        self.log.info(f"{self.spider_name} - Got initial page text")
 
     async def run(self):
         await self.request_initial_page()
