@@ -49,6 +49,15 @@ Your server is running: http://0.0.0.0:8080
 
 Just access: http://0.0.0.0:8080/instacart
 
+#### Steps of the spider
+
+```
+1 - Get the access token
+2 - Login using 2captcha service
+3 - Create a task to extract the products asynchronously
+4 - Save the result in the "instacart_items.json" file
+```
+
 ## Tools used
 
     - Python 3.7
