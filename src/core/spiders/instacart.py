@@ -3,12 +3,14 @@ from bs4 import BeautifulSoup
 from aiohttp import ClientSession
 
 from src.core.tools import remove_special_chars
+from src.core.logging import log
 from src.settings import SPIDERS_SETTINGS
 from src.spiders.interfaces.spiderlogin import SpiderLoginInterface
 
 
 class InstacartBusiness(SpiderLoginInterface):
 
+    item = {}
     spider_headers = SPIDERS_SETTINGS["instacart"]["BASE_HEADERS"]
     first_store = None
 
@@ -75,7 +77,7 @@ class InstacartBusiness(SpiderLoginInterface):
 
         async with ClientSession() as session:
             for path in links_paths:
-                self.log.info(f"{self.spider_name} - Path: {path}")
+                log.info(msg=f"Path: {path}")
                 url = f'{SPIDERS_SETTINGS["instacart"]["START_URL"]}{path}'
                 task = asyncio.ensure_future(
                     self.make_raw_request(
@@ -103,7 +105,7 @@ class InstacartBusiness(SpiderLoginInterface):
             except KeyError:
                 department = json_response['module_data']['tracking_params']['source_value']
 
-            self.log.info(f"{self.spider_name} - Department: {department}")
+            log.info(msg=f"Department: {department}")
 
             products = json_response['module_data']['items']
 
@@ -112,6 +114,6 @@ class InstacartBusiness(SpiderLoginInterface):
                 all_products.setdefault(department, []).append({
                     'name': product['name']
                 })
-                self.log.info(f"{self.spider_name} - Product {count}: {product['name']}")
+                log.info(msg=f"Product {count}: {product['name']}")
 
         self.item['products'] = all_products

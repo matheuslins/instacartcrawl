@@ -4,16 +4,12 @@ from aiohttp import web
 from http import HTTPStatus
 
 from src.core.request import RequestHandler
-from src.core.logging import LoggerHandler
+from src.core.logging import log
 
 
-class BaseSpider(LoggerHandler, web.View, metaclass=ABCMeta):
+class BaseSpider(web.View, metaclass=ABCMeta):
     response = None
     spider_name = None
-
-    def __init__(self, *args, **kwargs):
-        super(BaseSpider, self).__init__(*args, **kwargs)
-        self.set_base_config()
 
     @abstractmethod
     def get_start_url(self):
@@ -32,14 +28,14 @@ class BaseSpider(LoggerHandler, web.View, metaclass=ABCMeta):
         raise NotImplementedError
 
     async def request_initial_page(self):
-        self.log.info(f"{self.spider_name} - Initial page request")
+        log.info(msg=f"{self.spider_name} - Initial page request")
         request_handler = RequestHandler()
         response = await request_handler.make_session_request(
             method="GET",
             url=self.get_start_url()
         )
         self.response = response["text"]
-        self.log.info(f"{self.spider_name} - Got initial page text")
+        log.info(msg=f"{self.spider_name} - Got initial page text")
 
     async def run(self):
         await self.request_initial_page()

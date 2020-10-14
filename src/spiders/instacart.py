@@ -2,9 +2,12 @@ import json
 
 from src.settings import SPIDERS_SETTINGS
 from src.core.spiders.instacart import InstacartBusiness
+from src.models.instacart.item import InstaCartItem
+from src.spiders.interfaces.spider import BaseSpider
+from src.core.logging import log
 
 
-class InstaCartSpider(InstacartBusiness):
+class InstaCartSpider(BaseSpider, InstacartBusiness):
 
     spider_name = 'instacart'
     start_url = SPIDERS_SETTINGS["instacart"]["START_URL"]
@@ -13,6 +16,9 @@ class InstaCartSpider(InstacartBusiness):
         super(InstaCartSpider, self).__init__(*args, **kwargs)
         self.set_extraction_keys()
         self.set_login_params()
+
+    def get_start_url(self):
+        return self.start_url
 
     async def get(self):
         return await self.run()
@@ -57,7 +63,17 @@ class InstaCartSpider(InstacartBusiness):
             return None
         return data[0]["content"]
 
+    async def start_consult(self, response):
+        log.info(msg=f"{self.spider_name} - Start consult spider")
+        log.info(msg=f"{self.spider_name} - Spider with login")
+        self.start_login()
+        await self.make_login()
+
     async def start_extract(self):
         await self.consult_stores()
         await self.extract_data()
         self.save_item(file_name="instacart_items.json")
+
+    def save_item(self, file_name):
+        item = InstaCartItem(**self.item)
+        item.save(file_name)
