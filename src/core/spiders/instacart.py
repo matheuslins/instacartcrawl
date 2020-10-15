@@ -124,10 +124,11 @@ class InstacartBusiness(SpiderLoginInterface):
                 "storeName": self.item['storeName'],
                 "storeUrl": self.item['storeUrl']
             }
+            log.info(msg=f"Product {count}: {product['name']}")
+
             db_item = InstaCartDbItem(**item)
             db_item.save(elastic_instance)
-
-            log.info(msg=f"Product {count}: {product['name']}")
+            log.info(msg=f"Sent to ElasticSearch")
 
         elastic_instance.save_left_items()
 

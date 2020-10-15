@@ -73,6 +73,7 @@ class InstaCartSpider(BaseSpider, InstacartBusiness):
         await self.consult_stores()
         await self.extract_data()
         self.save_item(file_name="instacart_items.json")
+        log.info(msg=f"{self.spider_name} - Saved all items!")
 
     def save_item(self, file_name):
         item = InstaCartFileItem(**self.item)

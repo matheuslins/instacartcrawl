@@ -3,6 +3,8 @@ import hashlib
 from datetime import datetime
 from elasticsearch.helpers import bulk
 from elasticsearch.helpers.errors import BulkIndexError
+from elasticsearch.exceptions import ConnectionError
+from urllib3.exceptions import NewConnectionError
 
 from src.settings import SPIDERS_SETTINGS
 from src.core.database import config_client
@@ -43,14 +45,14 @@ class ElasticSearchDBHandler:
         if len(self.bulk_list) >= self.bulk_size:
             try:
                 bulk(client=self.client, actions=self.insert_items())
-            except BulkIndexError:
+            except (BulkIndexError, NewConnectionError, ConnectionError):
                 pass
             self.bulk_list = []
 
     def save_left_items(self):
         try:
             bulk(client=self.client, actions=self.insert_items(), raise_on_exception=False)
-        except BulkIndexError:
+        except (BulkIndexError, NewConnectionError, ConnectionError):
             pass
 
 
