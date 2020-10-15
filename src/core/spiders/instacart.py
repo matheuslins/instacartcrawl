@@ -28,6 +28,7 @@ class InstacartBusiness(SpiderLoginInterface):
         self.first_store = json_response['container']['tracking_params']['warehouse_id']
 
     async def extract_data(self):
+        log.info(msg="Start extract")
         self.spider_headers['cookie'] = SPIDERS_SETTINGS["instacart"]["STORE_COOKIE"]
 
         url = SPIDERS_SETTINGS['instacart']['SPECIFIC_STORE'](self.first_store)
@@ -41,6 +42,7 @@ class InstacartBusiness(SpiderLoginInterface):
         store = soup.find(name="div", attrs={"data-identifier": "store_logo"})
         store_name = store.img.attrs['alt']
 
+        log.info(msg=f"Crawling store: {store_name}")
         self.item = {
             "storeName": store_name,
             "storeUrl": store.img.attrs['src']
@@ -128,7 +130,6 @@ class InstacartBusiness(SpiderLoginInterface):
 
             db_item = InstaCartDbItem(**item)
             db_item.save(elastic_instance)
-            log.info(msg=f"Sent to ElasticSearch")
 
         elastic_instance.save_left_items()
 
