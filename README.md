@@ -26,6 +26,12 @@ AUTH_PASSWORD=
 2CAPTCHA_URL=https://2captcha.com/in.php
 ````
 
+3 - Save products on DB (ElasticSearch)
+
+````.env
+SAVE_DB_ITEM=True
+````
+
 ### Pre Run
 
 Create a virtualenv and install dependencies: ```make setup``` 
@@ -57,6 +63,8 @@ Just access: http://0.0.0.0:8080/instacart
 2 - Login using 2captcha service
 3 - Create a task to extract the products asynchronously
 4 - Save the result in the "instacart_items.json" file
+5 - Save all products on ElasticSearch (if the flag SAVE_DB_ITEM is True)
+
 ```
 
 ## Tools used
@@ -64,6 +72,7 @@ Just access: http://0.0.0.0:8080/instacart
     - Python 3.7
     - 2Captcha (To broken recaptcha)
     - AIOHTTP (To create a server and making async requests)
+    - ElasticSearch (To save and indexing all products)
 
 ## The Process
 
@@ -95,8 +104,8 @@ and uses javascript to load the data on the page. So, I needed to understand the
 ## TODO
 
 ```
-1 - Save in NoSql Database (MongoDB or ElasticSearch)
-2 - Create a Dashboard where is possible to see the processing of scraping in real-time
-3 - Unit Tests
+1 - Create a Dashboard where is possible to see the processing of scraping in real-time
+2 - Unit Tests
+3 - Treat all exceptions
 ```
 

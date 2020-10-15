@@ -6,6 +6,8 @@ from src.core.tools import remove_special_chars
 from src.core.logging import log
 from src.settings import SPIDERS_SETTINGS
 from src.spiders.interfaces.spiderlogin import SpiderLoginInterface
+from src.models.instacart.item import InstaCartDbItem
+from src.core.database.elastic import elastic_instance
 
 
 class InstacartBusiness(SpiderLoginInterface):
@@ -89,14 +91,13 @@ class InstacartBusiness(SpiderLoginInterface):
                 )
                 tasks.append(task)
 
-            await self.save_all_products(tasks)
+            await self.open_tasks(tasks)
 
         return tasks
 
-    async def save_all_products(self, tasks):
+    async def open_tasks(self, tasks):
         tasks_response = await asyncio.gather(*tasks)
-        all_products = {}
-        count = 0
+        products_items = {}
 
         for _task in tasks_response:
             json_response = _task['json']
@@ -109,11 +110,32 @@ class InstacartBusiness(SpiderLoginInterface):
 
             products = json_response['module_data']['items']
 
-            for product in products:
-                count = count + 1
-                all_products.setdefault(department, []).append({
-                    'name': product['name']
-                })
-                log.info(msg=f"Product {count}: {product['name']}")
+            if SPIDERS_SETTINGS['instacart']['SAVE_DB_ITEM']:
+                await self.send_item_to_db(products, department)
 
-        self.item['products'] = all_products
+            await self.save_file_item(products_items, products, department)
+
+    async def send_item_to_db(self, products, department):
+
+        for count, product in enumerate(products):
+            item = {
+                "name": product["name"],
+                "department": department,
+                "storeName": self.item['storeName'],
+                "storeUrl": self.item['storeUrl']
+            }
+            db_item = InstaCartDbItem(**item)
+            db_item.save(elastic_instance)
+
+            log.info(msg=f"Product {count}: {product['name']}")
+
+        elastic_instance.save_left_items()
+
+    async def save_file_item(self, products_items, products, department):
+        for count, product in enumerate(products):
+            products_items.setdefault(department, []).append({
+                'name': product['name']
+            })
+            log.info(msg=f"Product {count}: {product['name']}")
+
+        self.item['products'] = products_items

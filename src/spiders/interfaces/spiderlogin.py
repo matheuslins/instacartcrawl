@@ -7,6 +7,7 @@ from src.settings import SPIDERS_SETTINGS, CAPTCHA
 
 
 class SpiderLoginInterface(LoginHandler):
+
     session_cookies = {}
     login_params = {}
 

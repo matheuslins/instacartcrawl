@@ -5,3 +5,5 @@ python-decouple==3.3
 beautifulsoup4==4.9.3
 2captcha-python==1.0.3
 itemadapter==0.1.1
+elasticsearch==7.9.1
+pytz==2020.1

@@ -8,8 +8,10 @@ from src.core.logging import log
 
 
 class BaseSpider(web.View, metaclass=ABCMeta):
+
     response = None
     spider_name = None
+    start_url = None
 
     @abstractmethod
     def get_start_url(self):
@@ -24,7 +26,7 @@ class BaseSpider(web.View, metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    def save_item(self, file_name):
+    def save_item(self, *args, **kwargs):
         raise NotImplementedError
 
     async def request_initial_page(self):

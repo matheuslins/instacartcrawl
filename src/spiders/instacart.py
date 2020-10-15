@@ -2,9 +2,9 @@ import json
 
 from src.settings import SPIDERS_SETTINGS
 from src.core.spiders.instacart import InstacartBusiness
-from src.models.instacart.item import InstaCartItem
-from src.spiders.interfaces.spider import BaseSpider
 from src.core.logging import log
+from src.spiders.interfaces.spider import BaseSpider
+from src.models.instacart.item import InstaCartFileItem
 
 
 class InstaCartSpider(BaseSpider, InstacartBusiness):
@@ -75,5 +75,6 @@ class InstaCartSpider(BaseSpider, InstacartBusiness):
         self.save_item(file_name="instacart_items.json")
 
     def save_item(self, file_name):
-        item = InstaCartItem(**self.item)
+        item = InstaCartFileItem(**self.item)
         item.save(file_name)
+
