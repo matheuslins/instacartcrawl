@@ -70,7 +70,7 @@ Just access: http://0.0.0.0:8080/instacart
 
 #### Kibana
 
-If you set `SAVE_DB_ITEM=True` and executed `make run-docker` you can see all products on Kibana here: http://localhost:5601/
+If you set `SAVE_DB_ITEM=True` and executed `make run-docker` you can see all products on Kibana here: http://localhost:5601/app/discover#/
 
 ## Tools used
 
