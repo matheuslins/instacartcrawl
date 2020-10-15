@@ -6,6 +6,8 @@ The spider capture the products of the first store in the account.
 
 To broken the Recaptcha has used the [2Captcha ](https://2captcha.com/) system, 
 so it's necessary to set the API KEY as environment vars.
+
+![Kibana Products Dashboard](img/es.png)
  
 ### Environment vars
 

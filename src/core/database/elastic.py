@@ -11,7 +11,7 @@ from src.core.database import config_client
 class ElasticSearchDBHandler:
 
     bulk_list = []
-    bulk_size = 10
+    bulk_size = 100
 
     def __init__(self):
         self.es_index = SPIDERS_SETTINGS['instacart']['ES_INDEX']
