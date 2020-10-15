@@ -64,8 +64,11 @@ Just access: http://0.0.0.0:8080/instacart
 3 - Create a task to extract the products asynchronously
 4 - Save the result in the "instacart_items.json" file
 5 - Save all products on ElasticSearch (if the flag SAVE_DB_ITEM is True)
-
 ```
+
+#### Kibana
+
+If you set `SAVE_DB_ITEM=True` and executed `make run-docker` you can see all products on Kibana here: http://localhost:5601/
 
 ## Tools used
 
