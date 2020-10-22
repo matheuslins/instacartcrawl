@@ -75,7 +75,7 @@ If you set `SAVE_DB_ITEM=True` and executed `make run-docker` you can see all pr
 ## Tools used
 
     - Python 3.7
-    - 2Captcha (To broken recaptcha)
+    - 2Captcha (To break the recaptcha)
     - AIOHTTP (To create a server and making async requests)
     - ElasticSearch (To save and indexing all products)
 
