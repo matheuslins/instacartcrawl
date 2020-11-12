@@ -30,3 +30,5 @@ run:
 setup:
 	pipenv install
 
+lock:
+	pipenv lock

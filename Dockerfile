@@ -7,6 +7,6 @@ ADD . .
 
 EXPOSE 8080
 
-RUN pip install -r requirements.txt
+RUN pipenv install
 
 CMD [ "python", "/app/main.py" ]
