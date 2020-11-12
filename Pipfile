@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+aiohttp = "==3.6.2"
+cchardet = "==2.1.6"
+aiodns = "==2.0.0"
+python-decouple = "==3.3"
+beautifulsoup4 = "==4.9.3"
+2captcha-python = "==1.0.3"
+itemadapter = "==0.1.1"
+elasticsearch = "==7.9.1"
+pytz = "==2020.1"
+urllib3 = "==1.25.10"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
